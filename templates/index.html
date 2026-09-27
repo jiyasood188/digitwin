@@ -1,0 +1,4051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Digital Twin</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🎓</div>
+
+            <div>
+                <span>Digital Twin Campus</span>
+            </div>
+        </div>
+
+
+        <div class="admin">
+
+            <div class="admin-avatar">
+                A
+            </div>
+
+            <div>
+                <strong>Welcome back, Admin!</strong>
+                <small>Campus Control</small>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="#" class="nav-item active">
+                <p>Overview</p>
+            </a>
+
+            <a href="#" class="nav-item">
+                <p>Buildings</p>
+            </a>
+
+            <a href="#" class="nav-item">
+                <p>Energy</p>
+            </a>
+
+            <a href="#" class="nav-item">
+                <p>Occupancy</p>
+            </a>
+
+            <a href="#" class="nav-item">
+                <p>Sensors</p>
+            </a>
+
+            <a href="#" class="nav-item">
+                <p>Alerts</p>
+            </a>
+
+            <a href="#" class="nav-item">
+                <p>Settings</p>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>All systems live</strong>
+                    <small>Updated 12 sec ago</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- ================= TOPBAR ================= -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Digital Twin Campus
+                </h1>
+
+                <p>
+                    Real-time campus intelligence
+                </p>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="backend-status-pill" id="backend-status-pill" title="Connecting to Flask & MySQL...">
+                    <span class="status-dot"></span>
+                    <span id="backend-status-text">MySQL Connected</span>
+                </div>
+
+                <div class="search">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search buildings, sensors, zones..."
+                    >
+
+                </div>
+
+
+                <button class="icon-button">
+
+                    🔔
+
+                    <b>5</b>
+
+                </button>
+
+
+                <div class="profile">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+
+                    <span></span>
+
+                    LIVE DIGITAL TWIN
+
+                </div>
+
+
+                <h2>
+
+                    Your Campus, Connected 👀
+
+                    <br>
+
+                    <strong>
+                        Everything is on track !
+                    </strong>
+
+                </h2>
+
+
+                <p>
+                    Monitor buildings, spaces and campus activity from one place.
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <button class="primary-btn">
+
+                        <span>▶</span>
+
+                        Explore Digital Twin
+
+                    </button>
+
+
+                    <button class="secondary-btn">
+
+                        View Analytics
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-orb">
+
+                <div class="orb-ring"></div>
+
+                <div class="orb-building">
+                    🏫
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= STATS ================= -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon building-icon">
+                    ▦
+                </div>
+
+                <div>
+
+                    <span>Total Buildings</span>
+
+                    <strong id="stat-total-buildings">18</strong>
+
+                    <small>
+                        Mapped on campus
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon sensor-icon">
+                    ⌁
+                </div>
+
+                <div>
+
+                    <span>Network Status</span>
+
+                    <strong id="stat-network-status">98.7%</strong>
+
+                    <small>
+                        All systems operational
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon energy-icon">
+                    ϟ
+                </div>
+
+                <div>
+
+                    <span>Active Issues</span>
+
+                    <strong id="stat-active-issues">07</strong>
+
+                    <small>
+                        Needs attention
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon people-icon">
+                    ♟
+                </div>
+
+                <div>
+
+                    <span>Campus Coverage</span>
+
+                    <strong id="stat-campus-coverage">94%</strong>
+
+                    <small>
+                        Digitally mapped
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= WORKSPACE ================= -->
+
+        <section class="workspace">
+
+
+            <!-- CAMPUS DIGITAL TWIN -->
+
+            <div class="campus-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            LIVE ENVIRONMENT
+                        </span>
+
+                        <h3>
+                            Campus Digital Twin
+                        </h3>
+
+                        <p>
+                            Interactive virtual replica
+                        </p>
+
+                    </div>
+
+
+                    <div class="live-pill">
+
+                        <span></span>
+
+                        Live
+
+                    </div>
+
+                </div>
+
+
+                <div class="campus-view">
+
+                    <div class="sky-glow"></div>
+
+
+                    <div class="ground">
+
+                        <div class="ground-grid"></div>
+
+                        <div class="main-path"></div>
+
+
+                        <!-- BUILDING A -->
+
+                        <div class="building building-a">
+
+                            <div class="building-label">
+
+                                <span class="pulse"></span>
+
+                                Admin Block
+
+                            </div>
+
+
+                            <div class="roof"></div>
+
+
+                            <div class="building-front">
+
+                                <div class="windows">
+
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+
+                                </div>
+
+
+                                <div class="door"></div>
+
+                            </div>
+
+
+                            <div class="building-side"></div>
+
+                        </div>
+
+
+
+                        <!-- BUILDING B -->
+
+                        <div class="building building-b">
+
+                            <div class="building-label">
+
+                                <span class="pulse blue"></span>
+
+                                Engineering Block
+
+                            </div>
+
+
+                            <div class="roof"></div>
+
+
+                            <div class="building-front">
+
+                                <div class="windows">
+
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+
+                                </div>
+
+
+                                <div class="door"></div>
+
+                            </div>
+
+
+                            <div class="building-side"></div>
+
+                        </div>
+
+
+
+                        <!-- BUILDING C -->
+
+                        <div class="building building-c">
+
+                            <div class="building-label">
+
+                                <span class="pulse orange"></span>
+
+                                Library
+
+                            </div>
+
+
+                            <div class="roof"></div>
+
+
+                            <div class="building-front">
+
+                                <div class="windows">
+
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+
+                                </div>
+
+
+                                <div class="door"></div>
+
+                            </div>
+
+
+                            <div class="building-side"></div>
+
+                        </div>
+
+
+
+                        <!-- TREES -->
+
+                        <div class="tree tree-1">
+                            <span></span>
+                        </div>
+
+                        <div class="tree tree-2">
+                            <span></span>
+                        </div>
+
+                        <div class="tree tree-3">
+                            <span></span>
+                        </div>
+
+                        <div class="tree tree-4">
+                            <span></span>
+                        </div>
+
+
+
+                        <!-- SENSOR POINTS -->
+
+                        <div class="sensor-point sensor-1">
+                            <span></span>
+                        </div>
+
+                        <div class="sensor-point sensor-2">
+                            <span></span>
+                        </div>
+
+                        <div class="sensor-point sensor-3">
+                            <span></span>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CAMPUS CONTROLS -->
+
+                    <div class="campus-controls">
+
+                        <button>+</button>
+
+                        <button>−</button>
+
+                        <button>⛶</button>
+
+                    </div>
+
+
+
+                    <!-- CAMPUS INFO -->
+
+                    <div class="campus-info">
+
+                        <strong>
+                            Central Campus
+                        </strong>
+
+                        <span>
+                            18 buildings · 642 sensors
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RIGHT COLUMN -->
+
+            <div class="right-column">
+
+
+                <!-- ZONE DISTRIBUTION -->
+
+                <div class="zone-card">
+
+                    <div class="section-header small">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                CAMPUS DATA
+                            </span>
+
+                            <h3>
+                                Zone Distribution
+                            </h3>
+
+                        </div>
+
+
+                        <button class="more-btn">
+                            •••
+                        </button>
+
+                    </div>
+
+
+                    <div class="zone-content">
+
+                        <div class="donut">
+
+                            <div class="donut-center">
+
+                                <strong>
+                                    62%
+                                </strong>
+
+                                <span>
+                                    occupied
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="legend">
+
+                            <div>
+                                <i class="green"></i>
+                                Academic
+                                <b>40%</b>
+                            </div>
+
+                            <div>
+                                <i class="peach"></i>
+                                Hostels
+                                <b>25%</b>
+                            </div>
+
+                            <div>
+                                <i class="yellow"></i>
+                                Labs
+                                <b>17%</b>
+                            </div>
+
+                            <div>
+                                <i class="blue"></i>
+                                Sports
+                                <b>14%</b>
+                            </div>
+
+                            <div>
+                                <i class="gray"></i>
+                                Other
+                                <b>4%</b>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RECENT ALERTS -->
+
+                <div class="alerts-card">
+
+                    <div class="section-header small">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                MONITORING
+                            </span>
+
+                            <h3>
+                                Recent Alerts
+                            </h3>
+
+                        </div>
+
+
+                        <button class="see-all">
+                            See all
+                        </button>
+
+                    </div>
+
+
+                    <div class="alert">
+
+                        <div class="alert-icon red">
+                            ϟ
+                        </div>
+
+                        <div class="alert-text">
+
+                            <strong>
+                                Lab Block B — HVAC Load High
+                            </strong>
+
+                            <small>
+                                Sensor #A203 · 3 min ago
+                            </small>
+
+                        </div>
+
+                        <span class="alert-status warning-status">
+                            Warning
+                        </span>
+
+                    </div>
+
+
+                    <div class="alert">
+
+                        <div class="alert-icon yellow">
+                            ☼
+                        </div>
+
+                        <div class="alert-text">
+
+                            <strong>
+                                Library — Lighting Auto-Adjusted
+                            </strong>
+
+                            <small>
+                                Zone L1 · 22 min ago
+                            </small>
+
+                        </div>
+
+                        <span class="alert-status resolved">
+                            Resolved
+                        </span>
+
+                    </div>
+
+
+                    <div class="alert">
+
+                        <div class="alert-icon blue">
+                            ▪
+                        </div>
+
+                        <div class="alert-text">
+
+                            <strong>
+                                Hostel Gate 2 — Access Sync
+                            </strong>
+
+                            <small>
+                                Sensor #G09 · 1 hr ago
+                            </small>
+
+                        </div>
+
+                        <span class="alert-status live">
+                            Live
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= BOTTOM GRID ================= -->
+
+        <section class="bottom-grid">
+
+
+            <!-- ENERGY -->
+
+            <div class="energy-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            ENERGY MONITORING
+                        </span>
+
+                        <h3>
+                            Weekly Energy Usage
+                        </h3>
+
+                    </div>
+
+
+                    <button class="dropdown">
+                        This Week ▾
+                    </button>
+
+                </div>
+
+
+                <div class="chart">
+
+                    <div class="bar">
+                        <span>Mon</span>
+                    </div>
+
+                    <div class="bar">
+                        <span>Tue</span>
+                    </div>
+
+                    <div class="bar high">
+                        <span>Wed</span>
+                    </div>
+
+                    <div class="bar">
+                        <span>Thu</span>
+                    </div>
+
+                    <div class="bar tall">
+                        <span>Fri</span>
+                    </div>
+
+                    <div class="bar">
+                        <span>Sat</span>
+                    </div>
+
+                    <div class="bar short">
+                        <span>Sun</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SYSTEM HEALTH -->
+
+            <div class="health-card">
+
+                <div class="health-circle">
+
+                    <div>
+
+                        <strong>
+                            92
+                        </strong>
+
+                        <span>
+                            %
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <span class="eyebrow">
+                        SYSTEM HEALTH
+                    </span>
+
+                    <h3>
+                        Campus is healthy
+                    </h3>
+
+                    <p>
+                        17 of 18 buildings operating normally.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BUILDINGS SECTION
+        ====================================================== -->
+
+        <section class="page-section" id="buildings-section">
+
+
+            <div class="page-section-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        CAMPUS DIRECTORY
+                    </span>
+
+                    <h2>
+                        Buildings
+                    </h2>
+
+                    <p>
+                        Monitor every building across the campus.
+                    </p>
+
+                </div>
+
+
+                <div class="building-filter">
+
+                    <button class="filter-btn active">
+                        All Buildings
+                    </button>
+
+                    <button class="filter-btn">
+                        Academic
+                    </button>
+
+                    <button class="filter-btn">
+                        Hostels
+                    </button>
+
+                    <button class="filter-btn">
+                        Other
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= BUILDING GRID ================= -->
+
+            <div class="building-grid">
+
+
+                <!-- BLOCK 1 -->
+
+                <div class="building-card">
+
+                    <div class="building-card-top">
+
+                        <div class="building-card-icon">
+                            🏢
+                        </div>
+
+                        <span class="building-status normal">
+
+                            <i></i>
+
+                            Normal
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Block 1
+                    </h3>
+
+                    <p>
+                        Academic Block
+                    </p>
+
+
+                    <div class="building-card-stats">
+
+                        <div>
+
+                            <span>
+                                Occupancy
+                            </span>
+
+                            <strong>
+                                420
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Energy
+                            </span>
+
+                            <strong>
+                                18.6 kW
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sensors
+                            </span>
+
+                            <strong>
+                                52
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-building"
+                        type="button"
+                    >
+                        View Building →
+                    </button>
+
+                </div>
+
+
+
+                <!-- BLOCK 2 -->
+
+                <div class="building-card">
+
+                    <div class="building-card-top">
+
+                        <div class="building-card-icon">
+                            🏢
+                        </div>
+
+                        <span class="building-status normal">
+
+                            <i></i>
+
+                            Normal
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Block 2
+                    </h3>
+
+                    <p>
+                        Academic Block
+                    </p>
+
+
+                    <div class="building-card-stats">
+
+                        <div>
+
+                            <span>
+                                Occupancy
+                            </span>
+
+                            <strong>
+                                385
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Energy
+                            </span>
+
+                            <strong>
+                                16.9 kW
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sensors
+                            </span>
+
+                            <strong>
+                                48
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-building"
+                        type="button"
+                    >
+                        View Building →
+                    </button>
+
+                </div>
+
+
+
+                <!-- BLOCK 3 -->
+
+                <div class="building-card">
+
+                    <div class="building-card-top">
+
+                        <div class="building-card-icon">
+                            🏢
+                        </div>
+
+                        <span class="building-status warning">
+
+                            <i></i>
+
+                            Attention
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Block 3
+                    </h3>
+
+                    <p>
+                        Academic Block
+                    </p>
+
+
+                    <div class="building-card-stats">
+
+                        <div>
+
+                            <span>
+                                Occupancy
+                            </span>
+
+                            <strong>
+                                510
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Energy
+                            </span>
+
+                            <strong>
+                                22.4 kW
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sensors
+                            </span>
+
+                            <strong>
+                                61
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-building"
+                        type="button"
+                    >
+                        View Building →
+                    </button>
+
+                </div>
+
+
+
+                <!-- BLOCK 4 -->
+
+                <div class="building-card">
+
+                    <div class="building-card-top">
+
+                        <div class="building-card-icon">
+                            🏢
+                        </div>
+
+                        <span class="building-status normal">
+
+                            <i></i>
+
+                            Normal
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Block 4
+                    </h3>
+
+                    <p>
+                        Academic Block
+                    </p>
+
+
+                    <div class="building-card-stats">
+
+                        <div>
+
+                            <span>
+                                Occupancy
+                            </span>
+
+                            <strong>
+                                465
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Energy
+                            </span>
+
+                            <strong>
+                                20.1 kW
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sensors
+                            </span>
+
+                            <strong>
+                                57
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-building"
+                        type="button"
+                    >
+                        View Building →
+                    </button>
+
+                </div>
+
+
+
+                <!-- BLOCK 5 -->
+
+                <div class="building-card">
+
+                    <div class="building-card-top">
+
+                        <div class="building-card-icon">
+                            🏢
+                        </div>
+
+                        <span class="building-status normal">
+
+                            <i></i>
+
+                            Normal
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Block 5
+                    </h3>
+
+                    <p>
+                        Academic Block
+                    </p>
+
+
+                    <div class="building-card-stats">
+
+                        <div>
+
+                            <span>
+                                Occupancy
+                            </span>
+
+                            <strong>
+                                398
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Energy
+                            </span>
+
+                            <strong>
+                                17.8 kW
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sensors
+                            </span>
+
+                            <strong>
+                                49
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-building"
+                        type="button"
+                    >
+                        View Building →
+                    </button>
+
+                </div>
+
+
+
+                <!-- BLOCK 6 -->
+
+                <div class="building-card">
+
+                    <div class="building-card-top">
+
+                        <div class="building-card-icon">
+                            🏢
+                        </div>
+
+                        <span class="building-status normal">
+
+                            <i></i>
+
+                            Normal
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Block 6
+                    </h3>
+
+                    <p>
+                        Academic Block
+                    </p>
+
+
+                    <div class="building-card-stats">
+
+                        <div>
+
+                            <span>
+                                Occupancy
+                            </span>
+
+                            <strong>
+                                445
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Energy
+                            </span>
+
+                            <strong>
+                                19.5 kW
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sensors
+                            </span>
+
+                            <strong>
+                                55
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-building"
+                        type="button"
+                    >
+                        View Building →
+                    </button>
+
+                </div>
+
+
+
+                <!-- BLOCK 7 -->
+
+                <div class="building-card">
+
+                    <div class="building-card-top">
+
+                        <div class="building-card-icon">
+                            🏢
+                        </div>
+
+                        <span class="building-status normal">
+
+                            <i></i>
+
+                            Normal
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Block 7
+                    </h3>
+
+                    <p>
+                        Academic Block
+                    </p>
+
+
+                    <div class="building-card-stats">
+
+                        <div>
+
+                            <span>
+                                Occupancy
+                            </span>
+
+                            <strong>
+                                376
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Energy
+                            </span>
+
+                            <strong>
+                                15.7 kW
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sensors
+                            </span>
+
+                            <strong>
+                                44
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-building"
+                        type="button"
+                    >
+                        View Building →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BUILDING ROOM VIEW
+                 IMPORTANT:
+                 Initially hidden.
+                 View Building click ke baad JS isko show karega.
+            ================================================== -->
+
+            <div
+                class="building-room-view"
+                id="building-room-view"
+                hidden
+            >
+
+                <div class="building-room-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            BUILDING DIRECTORY
+                        </span>
+
+                        <h2 id="selected-building-name">
+                            Block 1
+                        </h2>
+
+                        <p>
+                            Select a room to view its timetable.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="close-building-view"
+                        id="close-building-view"
+                        type="button"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+
+                <!-- ROOM SECTION -->
+
+                <div class="room-section">
+
+                    <div class="room-section-title">
+
+                        <span>
+                            ROOMS
+                        </span>
+
+                        <small>
+                            Click a room to view timetable
+                        </small>
+
+                    </div>
+
+
+                    <!-- JS YAHAN ROOMS ADD KAREGA -->
+
+                    <div
+                        class="room-grid"
+                        id="room-grid"
+                    >
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TIMETABLE
+                     Initially hidden.
+                     Room select karne ke BAAD hi show hoga.
+                ================================================== -->
+
+                <div
+                    class="room-timetable"
+                    id="room-timetable"
+                    hidden
+                >
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ENERGY SECTION ================= -->
+
+        <section
+            class="page-section"
+            id="energy-section"
+        >
+
+            <div
+                class="page-section-header"
+                style="display: flex; justify-content: space-between; align-items: center; background-color: #f5f5f5; padding: 10px 20px; border-radius: 8px;"
+            >
+
+                <div>
+
+                    <span
+                        class="eyebrow"
+                        style="font-size: 10px;"
+                    >
+                        ENERGY MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Energy Dashboard
+                    </h2>
+
+                    <p>
+                        Monitor electricity usage across the campus.
+                    </p>
+
+                </div>
+
+
+                <button class="dropdown">
+                    This Week ▾
+                </button>
+
+            </div>
+
+
+            <div class="energy-top-grid">
+
+                <div class="energy-stat-card">
+                    <span>Total Consumption</span>
+                    <strong>324 kWh</strong>
+                    <small>+4.2% from yesterday</small>
+                </div>
+
+                <div class="energy-stat-card">
+                    <span>Solar Production</span>
+                    <strong>98 kWh</strong>
+                    <small>Green Energy</small>
+                </div>
+
+                <div class="energy-stat-card">
+                    <span>Peak Load</span>
+                    <strong>42 kW</strong>
+                    <small>Block 3</small>
+                </div>
+
+                <div class="energy-stat-card">
+                    <span>Efficiency</span>
+                    <strong>91%</strong>
+                    <small>Excellent</small>
+                </div>
+
+            </div>
+
+
+            <div class="energy-main-grid">
+
+
+                <div class="energy-chart-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                WEEKLY USAGE
+                            </span>
+
+                            <h3>
+                                Energy Analytics
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="energy-chart">
+
+                        <div
+                            class="energy-bar"
+                            style="height:90px;"
+                        >
+                            <span>Mon</span>
+                        </div>
+
+                        <div
+                            class="energy-bar"
+                            style="height:130px;"
+                        >
+                            <span>Tue</span>
+                        </div>
+
+                        <div
+                            class="energy-bar high"
+                            style="height:170px;"
+                        >
+                            <span>Wed</span>
+                        </div>
+
+                        <div
+                            class="energy-bar"
+                            style="height:110px;"
+                        >
+                            <span>Thu</span>
+                        </div>
+
+                        <div
+                            class="energy-bar peak"
+                            style="height:190px;"
+                        >
+                            <span>Fri</span>
+                        </div>
+
+                        <div
+                            class="energy-bar"
+                            style="height:100px;"
+                        >
+                            <span>Sat</span>
+                        </div>
+
+                        <div
+                            class="energy-bar low"
+                            style="height:70px;"
+                        >
+                            <span>Sun</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="building-energy-card">
+
+                    <div class="section-header small">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                LIVE BUILDINGS
+                            </span>
+
+                            <h3>
+                                Energy Usage
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="energy-building">
+                        <span>Block 1</span>
+                        <strong>18.6 kW</strong>
+                    </div>
+
+                    <div class="energy-building">
+                        <span>Block 2</span>
+                        <strong>16.9 kW</strong>
+                    </div>
+
+                    <div class="energy-building warning">
+                        <span>Block 3</span>
+                        <strong>22.4 kW ⚠</strong>
+                    </div>
+
+                    <div class="energy-building">
+                        <span>Block 4</span>
+                        <strong>11.2 kW</strong>
+                    </div>
+
+                    <div class="energy-building">
+                        <span>Block 5</span>
+                        <strong>14.1 kW</strong>
+                    </div>
+
+                    <div class="energy-building">
+                        <span>Block 6</span>
+                        <strong>14.1 kW</strong>
+                    </div>
+
+                    <div class="energy-building">
+                        <span>Block 7</span>
+                        <strong>14.1 kW</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= OCCUPANCY SECTION ================= -->
+
+        <section
+            class="page-section"
+            id="occupancy-section"
+        >
+
+            <div class="page-section-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        CAMPUS OCCUPANCY
+                    </span>
+
+                    <h2>
+                        Occupancy Dashboard
+                    </h2>
+
+                    <p>
+                        Monitor people movement and occupancy across the campus.
+                    </p>
+
+                </div>
+
+
+                <button class="dropdown">
+                    Live Data ▾
+                </button>
+
+            </div>
+
+
+            <div class="occupancy-top-grid">
+
+
+                <div class="occupancy-stat-card">
+
+                    <div class="occupancy-stat-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <span>
+                            People on Campus
+                        </span>
+
+                        <strong>
+                            2,846
+                        </strong>
+
+                        <small>
+                            Live occupancy
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="occupancy-stat-card">
+
+                    <div class="occupancy-stat-icon green">
+                        🏢
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Occupied Buildings
+                        </span>
+
+                        <strong>
+                            16 / 18
+                        </strong>
+
+                        <small>
+                            Buildings active
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="occupancy-stat-card">
+
+                    <div class="occupancy-stat-icon blue">
+                        🚪
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Entry Today
+                        </span>
+
+                        <strong>
+                            4,218
+                        </strong>
+
+                        <small>
+                            Campus entries
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="occupancy-stat-card">
+
+                    <div class="occupancy-stat-icon yellow">
+                        📊
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Average Occupancy
+                        </span>
+
+                        <strong>
+                            78%
+                        </strong>
+
+                        <small>
+                            Campus average
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="occupancy-main-grid">
+
+
+                <div class="occupancy-building-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                BUILDING ACTIVITY
+                            </span>
+
+                            <h3>
+                                Current Occupancy
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="occupancy-row">
+
+                        <div class="occupancy-name">
+
+                            <strong>
+                                Block 1
+                            </strong>
+
+                            <span>
+                                420 / 500 students
+                            </span>
+
+                        </div>
+
+
+                        <div class="occupancy-progress">
+                            <div style="width:84%;"></div>
+                        </div>
+
+
+                        <strong class="occupancy-percent">
+                            84%
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="occupancy-row">
+
+                        <div class="occupancy-name">
+
+                            <strong>
+                                Block 2
+                            </strong>
+
+                            <span>
+                                385 / 500 students
+                            </span>
+
+                        </div>
+
+
+                        <div class="occupancy-progress">
+                            <div style="width:77%;"></div>
+                        </div>
+
+
+                        <strong class="occupancy-percent">
+                            77%
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="occupancy-row warning-row">
+
+                        <div class="occupancy-name">
+
+                            <strong>
+                                Block 3
+                            </strong>
+
+                            <span>
+                                510 / 550 students
+                            </span>
+
+                        </div>
+
+
+                        <div class="occupancy-progress">
+                            <div style="width:93%;"></div>
+                        </div>
+
+
+                        <strong class="occupancy-percent">
+                            93%
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="occupancy-row">
+
+                        <div class="occupancy-name">
+
+                            <strong>
+                                Block 4
+                            </strong>
+
+                            <span>
+                                465 / 550 students
+                            </span>
+
+                        </div>
+
+
+                        <div class="occupancy-progress">
+                            <div style="width:85%;"></div>
+                        </div>
+
+
+                        <strong class="occupancy-percent">
+                            85%
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="occupancy-row">
+
+                        <div class="occupancy-name">
+
+                            <strong>
+                                Block 5
+                            </strong>
+
+                            <span>
+                                398 / 500 students
+                            </span>
+
+                        </div>
+
+
+                        <div class="occupancy-progress">
+                            <div style="width:80%;"></div>
+                        </div>
+
+
+                        <strong class="occupancy-percent">
+                            80%
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="occupancy-row">
+
+                        <div class="occupancy-name">
+
+                            <strong>
+                                Block 6
+                            </strong>
+
+                            <span>
+                                445 / 500 students
+                            </span>
+
+                        </div>
+
+
+                        <div class="occupancy-progress">
+                            <div style="width:89%;"></div>
+                        </div>
+
+
+                        <strong class="occupancy-percent">
+                            89%
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="occupancy-row">
+
+                        <div class="occupancy-name">
+
+                            <strong>
+                                Block 7
+                            </strong>
+
+                            <span>
+                                430 / 500 students
+                            </span>
+
+                        </div>
+
+
+                        <div class="occupancy-progress">
+                            <div style="width:86%;"></div>
+                        </div>
+
+
+                        <strong class="occupancy-percent">
+                            86%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="occupancy-zone-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                LIVE ZONES
+                            </span>
+
+                            <h3>
+                                Campus Areas
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="zone-occupancy">
+
+                        <div class="zone-icon green">
+                            📚
+                        </div>
+
+                        <div class="zone-info">
+
+                            <strong>
+                                Library
+                            </strong>
+
+                            <span>
+                                142 people
+                            </span>
+
+                        </div>
+
+                        <b>
+                            71%
+                        </b>
+
+                    </div>
+
+
+
+                    <div class="zone-occupancy">
+
+                        <div class="zone-icon blue">
+                            💻
+                        </div>
+
+                        <div class="zone-info">
+
+                            <strong>
+                                Labs
+                            </strong>
+
+                            <span>
+                                286 people
+                            </span>
+
+                        </div>
+
+                        <b>
+                            82%
+                        </b>
+
+                    </div>
+
+
+
+                    <div class="zone-occupancy">
+
+                        <div class="zone-icon pink">
+                            🏋️
+                        </div>
+
+                        <div class="zone-info">
+
+                            <strong>
+                                GYM
+                            </strong>
+
+                            <span>
+                                56 people
+                            </span>
+
+                        </div>
+
+                        <b>
+                            91%
+                        </b>
+
+                    </div>
+
+
+
+                    <div class="zone-occupancy">
+
+                        <div class="zone-icon yellow">
+                            🍽️
+                        </div>
+
+                        <div class="zone-info">
+
+                            <strong>
+                                Cafeteria
+                            </strong>
+
+                            <span>
+                                318 people
+                            </span>
+
+                        </div>
+
+                        <b>
+                            91%
+                        </b>
+
+                    </div>
+
+
+
+                    <div class="zone-occupancy">
+
+                        <div class="zone-icon gray">
+                            🖨️
+                        </div>
+
+                        <div class="zone-info">
+
+                            <strong>
+                                Tuck Shop
+                            </strong>
+
+                            <span>
+                                20 people
+                            </span>
+
+                        </div>
+
+                        <b>
+                            87%
+                        </b>
+
+                    </div>
+
+
+
+                    <div class="zone-occupancy">
+
+                        <div class="zone-icon peach">
+                            🌳
+                        </div>
+
+                        <div class="zone-info">
+
+                            <strong>
+                                Outdoor Area
+                            </strong>
+
+                            <span>
+                                126 people
+                            </span>
+
+                        </div>
+
+                        <b>
+                            42%
+                        </b>
+
+                    </div>
+
+
+
+                    <div class="zone-occupancy">
+
+                        <div class="zone-icon pink">
+                            🚘
+                        </div>
+
+                        <div class="zone-info">
+
+                            <strong>
+                                Parking Area
+                            </strong>
+
+                            <span>
+                                19 vehicles
+                            </span>
+
+                        </div>
+
+                        <b>
+                            79%
+                        </b>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="occupancy-footer">
+
+                <div>
+
+                    <span class="live-dot"></span>
+
+                    Live occupancy monitoring active
+
+                </div>
+
+
+                <span>
+                    Last updated 15 seconds ago
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= SENSORS SECTION ================= -->
+
+        <section
+            class="page-section"
+            id="sensors-section"
+        >
+
+            <div class="page-section-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        SENSOR MONITORING
+                    </span>
+
+                    <h2>
+                        Sensor Monitoring
+                    </h2>
+
+                    <p>
+                        Monitor real-time sensor activity and device health across the campus.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="dropdown"
+                    type="button"
+                    id="sensor-live-data"
+                >
+                    Live Data ▾
+                </button>
+
+            </div>
+
+
+            <div class="sensor-top-grid">
+
+
+                <div class="sensor-stat-card">
+
+                    <div class="sensor-stat-icon">
+                        ⌁
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Sensors
+                        </span>
+
+                        <strong id="sensor-stat-total">
+                            248
+                        </strong>
+
+                        <small>
+                            Across campus
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensor-stat-card">
+
+                    <div class="sensor-stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Active Sensors
+                        </span>
+
+                        <strong id="sensor-stat-active">
+                            231
+                        </strong>
+
+                        <small>
+                            Reporting live
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensor-stat-card">
+
+                    <div class="sensor-stat-icon yellow">
+                        !
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Warning
+                        </span>
+
+                        <strong id="sensor-stat-warning">
+                            11
+                        </strong>
+
+                        <small>
+                            Needs attention
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensor-stat-card">
+
+                    <div class="sensor-stat-icon red">
+                        ×
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Offline
+                        </span>
+
+                        <strong id="sensor-stat-offline">
+                            6
+                        </strong>
+
+                        <small>
+                            Not reporting
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="sensor-main-grid">
+
+
+                <div class="sensor-list-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                LIVE DEVICES
+                            </span>
+
+                            <h3>
+                                Sensor Status
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="sensor-row"
+                        tabindex="0"
+                    >
+
+                        <div class="sensor-device-icon green">
+                            °
+                        </div>
+
+                        <div class="sensor-device">
+
+                            <strong>
+                                Temperature Sensor
+                            </strong>
+
+                            <span>
+                                Block 1 · Room 203
+                            </span>
+
+                        </div>
+
+                        <div class="sensor-reading">
+
+                            <strong>
+                                22.4°C
+                            </strong>
+
+                            <span>
+                                Just now
+                            </span>
+
+                        </div>
+
+                        <span class="sensor-status active">
+                            Active
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="sensor-row"
+                        tabindex="0"
+                    >
+
+                        <div class="sensor-device-icon blue">
+                            ♟
+                        </div>
+
+                        <div class="sensor-device">
+
+                            <strong>
+                                Occupancy Sensor
+                            </strong>
+
+                            <span>
+                                Library · Floor 1
+                            </span>
+
+                        </div>
+
+                        <div class="sensor-reading">
+
+                            <strong>
+                                142 people
+                            </strong>
+
+                            <span>
+                                Just now
+                            </span>
+
+                        </div>
+
+                        <span class="sensor-status active">
+                            Active
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="sensor-row"
+                        tabindex="0"
+                    >
+
+                        <div class="sensor-device-icon yellow">
+                            ϟ
+                        </div>
+
+                        <div class="sensor-device">
+
+                            <strong>
+                                Energy Sensor
+                            </strong>
+
+                            <span>
+                                Block 1
+                            </span>
+
+                        </div>
+
+                        <div class="sensor-reading">
+
+                            <strong>
+                                18.6 kW
+                            </strong>
+
+                            <span>
+                                1 min ago
+                            </span>
+
+                        </div>
+
+                        <span class="sensor-status warning">
+                            Warning
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="sensor-row"
+                        tabindex="0"
+                    >
+
+                        <div class="sensor-device-icon blue">
+                            ◌
+                        </div>
+
+                        <div class="sensor-device">
+
+                            <strong>
+                                Air Quality Sensor
+                            </strong>
+
+                            <span>
+                                Science Lab · Floor 2
+                            </span>
+
+                        </div>
+
+                        <div class="sensor-reading">
+
+                            <strong>
+                                Good
+                            </strong>
+
+                            <span>
+                                Just now
+                            </span>
+
+                        </div>
+
+                        <span class="sensor-status active">
+                            Active
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="sensor-row"
+                        tabindex="0"
+                    >
+
+                        <div class="sensor-device-icon peach">
+                            ▣
+                        </div>
+
+                        <div class="sensor-device">
+
+                            <strong>
+                                Door Sensor
+                            </strong>
+
+                            <span>
+                                Admin Block · Main Entry
+                            </span>
+
+                        </div>
+
+                        <div class="sensor-reading">
+
+                            <strong>
+                                Closed
+                            </strong>
+
+                            <span>
+                                2 min ago
+                            </span>
+
+                        </div>
+
+                        <span class="sensor-status active">
+                            Active
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="sensor-row"
+                        tabindex="0"
+                    >
+
+                        <div class="sensor-device-icon green">
+                            ⌁
+                        </div>
+
+                        <div class="sensor-device">
+
+                            <strong>
+                                Motion Sensor
+                            </strong>
+
+                            <span>
+                                Sports Centre · Hall A
+                            </span>
+
+                        </div>
+
+                        <div class="sensor-reading">
+
+                            <strong>
+                                No motion
+                            </strong>
+
+                            <span>
+                                3 min ago
+                            </span>
+
+                        </div>
+
+                        <span class="sensor-status offline">
+                            Offline
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="sensor-row"
+                        tabindex="0"
+                    >
+
+                        <div class="sensor-device-icon blue">
+                            ▰
+                        </div>
+
+                        <div class="sensor-device">
+
+                            <strong>
+                                Water Level Sensor
+                            </strong>
+
+                            <span>
+                                Utility Building
+                            </span>
+
+                        </div>
+
+                        <div class="sensor-reading">
+
+                            <strong>
+                                79%
+                            </strong>
+
+                            <span>
+                                Just now
+                            </span>
+
+                        </div>
+
+                        <span class="sensor-status active">
+                            Active
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensor-health-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                DEVICE HEALTH
+                            </span>
+
+                            <h3>
+                                Sensor Health
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-health-circle">
+
+                        <div>
+
+                            <strong>
+                                93%
+                            </strong>
+
+                            <span>
+                                Healthy
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-health-details">
+
+                        <div>
+
+                            <span class="health-dot active-dot"></span>
+
+                            <p>
+                                <strong>231</strong> Active
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="health-dot warning-dot"></span>
+
+                            <p>
+                                <strong>11</strong> Warning
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="health-dot offline-dot"></span>
+
+                            <p>
+                                <strong>6</strong> Offline
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-network">
+
+                        <div>
+
+                            <span>
+                                Network status
+                            </span>
+
+                            <strong>
+                                Network Stable
+                            </strong>
+
+                        </div>
+
+                        <span class="network-live">
+                            Live
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="sensor-types-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            DEVICE CATALOG
+                        </span>
+
+                        <h3>
+                            Sensor Types
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sensor-types-grid">
+
+                    <div class="sensor-type">
+
+                        <div class="sensor-type-icon">
+                            °
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Temperature
+                            </strong>
+
+                            <span>
+                                Environment
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-type">
+
+                        <div class="sensor-type-icon">
+                            ♟
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Occupancy
+                            </strong>
+
+                            <span>
+                                People count
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-type">
+
+                        <div class="sensor-type-icon">
+                            ϟ
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Energy
+                            </strong>
+
+                            <span>
+                                Power usage
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-type">
+
+                        <div class="sensor-type-icon">
+                            ◌
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Air Quality
+                            </strong>
+
+                            <span>
+                                Environment
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-type">
+
+                        <div class="sensor-type-icon">
+                            ▣
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Door / Motion
+                            </strong>
+
+                            <span>
+                                Security
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sensor-type">
+
+                        <div class="sensor-type-icon">
+                            ▰
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Water Level
+                            </strong>
+
+                            <span>
+                                Utilities
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="sensor-footer">
+
+                <div>
+
+                    <span class="live-dot"></span>
+
+                    <span id="sensor-live-status">
+                        Live monitoring active
+                    </span>
+
+                </div>
+
+                <span id="sensor-last-updated">
+                    Last updated just now
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ALERTS SECTION ================= -->
+
+        <section
+            class="page-section"
+            id="alerts-section"
+        >
+
+            <div class="page-section-header alerts-page-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        CAMPUS MONITORING
+                    </span>
+
+                    <h2>
+                        Alerts
+                    </h2>
+
+                    <p>
+                        Review active campus issues and recent resolutions.
+                    </p>
+
+                </div>
+
+
+                <span class="alerts-demo-label" id="alerts-db-badge">
+                    Live MySQL Database
+                </span>
+
+            </div>
+
+
+            <div class="alerts-page-stats">
+
+                <div class="alerts-page-stat">
+
+                    <span>
+                        Total Alerts
+                    </span>
+
+                    <strong id="alerts-total">
+                        4
+                    </strong>
+
+                    <small>
+                        All monitored events
+                    </small>
+
+                </div>
+
+
+                <div class="alerts-page-stat critical">
+
+                    <span>
+                        Critical Alerts
+                    </span>
+
+                    <strong id="alerts-critical">
+                        1
+                    </strong>
+
+                    <small>
+                        Needs immediate action
+                    </small>
+
+                </div>
+
+
+                <div class="alerts-page-stat warning">
+
+                    <span>
+                        Warning Alerts
+                    </span>
+
+                    <strong id="alerts-warning">
+                        2
+                    </strong>
+
+                    <small>
+                        Needs attention
+                    </small>
+
+                </div>
+
+
+                <div class="alerts-page-stat resolved">
+
+                    <span>
+                        Resolved Alerts
+                    </span>
+
+                    <strong id="alerts-resolved">
+                        1
+                    </strong>
+
+                    <small>
+                        Closed successfully
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="alerts-page-toolbar">
+
+                <div
+                    class="alerts-filter"
+                    role="group"
+                    aria-label="Alert filters"
+                >
+
+                    <button
+                        class="alert-filter active"
+                        type="button"
+                        data-alert-filter="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        class="alert-filter"
+                        type="button"
+                        data-alert-filter="critical"
+                    >
+                        Critical
+                    </button>
+
+                    <button
+                        class="alert-filter"
+                        type="button"
+                        data-alert-filter="warning"
+                    >
+                        Warning
+                    </button>
+
+                    <button
+                        class="alert-filter"
+                        type="button"
+                        data-alert-filter="resolved"
+                    >
+                        Resolved
+                    </button>
+
+                </div>
+
+
+                <span id="alerts-last-updated">
+                    Last updated just now
+                </span>
+
+            </div>
+
+
+
+            <div class="alerts-page-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            ALERT QUEUE
+                        </span>
+
+                        <h3>
+                            Campus Alerts
+                        </h3>
+
+                    </div>
+
+
+                    <span class="live-pill">
+
+                        <span></span>
+
+                        Live
+
+                    </span>
+
+                </div>
+
+
+                <div id="alerts-list">
+
+
+                    <article
+                        class="alert alert-page-row"
+                        data-severity="warning"
+                        data-status="active"
+                    >
+
+                        <div class="alert-icon red">
+                            ϟ
+                        </div>
+
+                        <div class="alert-text">
+
+                            <strong>
+                                High Energy Consumption
+                            </strong>
+
+                            <small>
+                                Block 3 · Warning · Active · Today, 10:42 AM
+                            </small>
+
+                            <p>
+                                Energy consumption is above the normal threshold.
+                            </p>
+
+                        </div>
+
+                        <span class="alert-status warning-status">
+                            Warning
+                        </span>
+
+                        <button
+                            class="alert-action dismiss-alert"
+                            type="button"
+                        >
+                            Dismiss
+                        </button>
+
+                    </article>
+
+
+
+                    <article
+                        class="alert alert-page-row"
+                        data-severity="critical"
+                        data-status="active"
+                    >
+
+                        <div class="alert-icon red">
+                            !
+                        </div>
+
+                        <div class="alert-text">
+
+                            <strong>
+                                Temperature Threshold Exceeded
+                            </strong>
+
+                            <small>
+                                Block 1, Floor 2 · Critical · Active · Today, 09:18 AM
+                            </small>
+
+                            <p>
+                                Temperature has exceeded the configured safe threshold.
+                            </p>
+
+                        </div>
+
+                        <span class="alert-status critical-status">
+                            Critical
+                        </span>
+
+                        <button
+                            class="alert-action resolve-alert"
+                            type="button"
+                        >
+                            Resolve
+                        </button>
+
+                    </article>
+
+
+
+                    <article
+                        class="alert alert-page-row"
+                        data-severity="warning"
+                        data-status="active"
+                    >
+
+                        <div class="alert-icon yellow">
+                            ⌁
+                        </div>
+
+                        <div class="alert-text">
+
+                            <strong>
+                                Sensor Offline
+                            </strong>
+
+                            <small>
+                                Block 6, Corridor · Warning · Active · Today, 08:35 AM
+                            </small>
+
+                            <p>
+                                Motion sensor is currently offline.
+                            </p>
+
+                        </div>
+
+                        <span class="alert-status warning-status">
+                            Warning
+                        </span>
+
+                        <button
+                            class="alert-action dismiss-alert"
+                            type="button"
+                        >
+                            Dismiss
+                        </button>
+
+                    </article>
+
+
+
+                    <article
+                        class="alert alert-page-row"
+                        data-severity="resolved"
+                        data-status="resolved"
+                    >
+
+                        <div class="alert-icon blue">
+                            ✓
+                        </div>
+
+                        <div class="alert-text">
+
+                            <strong>
+                                Water Level Normalized
+                            </strong>
+
+                            <small>
+                                Block 7 · Resolved · Today, 07:12 AM
+                            </small>
+
+                            <p>
+                                Water level has returned to the normal range.
+                            </p>
+
+                        </div>
+
+                        <span class="alert-status resolved">
+                            Resolved
+                        </span>
+
+                        <button
+                            class="alert-action dismiss-alert"
+                            type="button"
+                        >
+                            Dismiss
+                        </button>
+
+                    </article>
+
+                </div>
+
+
+                <p
+                    class="alerts-empty"
+                    hidden
+                >
+                    No alerts match the current filter.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= SETTINGS SECTION ================= -->
+
+        <section
+            class="page-section"
+            id="settings-section"
+        >
+
+            <div class="page-section-header settings-page-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        CAMPUS CONTROL
+                    </span>
+
+                    <h2>
+                        Settings
+                    </h2>
+
+                    <p>
+                        Manage dashboard preferences and campus monitoring behavior.
+                    </p>
+
+                </div>
+
+
+                <span class="alerts-demo-label" id="settings-db-badge">
+                    Stored in MySQL Database
+                </span>
+
+            </div>
+
+
+
+            <div class="settings-grid">
+
+
+                <div class="settings-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                GENERAL
+                            </span>
+
+                            <h3>
+                                General Settings
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="settings-control">
+
+                        <span>
+
+                            <strong>
+                                Dashboard refresh interval
+                            </strong>
+
+                            <small>
+                                How often live dashboard indicators update.
+                            </small>
+
+                        </span>
+
+
+                        <select id="settings-refresh-interval">
+
+                            <option value="5">
+                                5 seconds
+                            </option>
+
+                            <option value="15">
+                                15 seconds
+                            </option>
+
+                            <option value="30">
+                                30 seconds
+                            </option>
+
+                            <option value="60">
+                                60 seconds
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Live data
+                            </strong>
+
+                            <small>
+                                Keep frontend monitoring indicators updating.
+                            </small>
+
+                        </span>
+
+
+                        <input
+                            id="settings-live-data"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+
+
+                    <label class="settings-control">
+
+                        <span>
+
+                            <strong>
+                                Default dashboard view
+                            </strong>
+
+                            <small>
+                                View shown when the dashboard loads.
+                            </small>
+
+                        </span>
+
+
+                        <select id="settings-default-view">
+
+                            <option value="Overview">
+                                Overview
+                            </option>
+
+                            <option value="Buildings">
+                                Buildings
+                            </option>
+
+                            <option value="Energy">
+                                Energy
+                            </option>
+
+                            <option value="Occupancy">
+                                Occupancy
+                            </option>
+
+                            <option value="Sensors">
+                                Sensors
+                            </option>
+
+                            <option value="Alerts">
+                                Alerts
+                            </option>
+
+                        </select>
+
+                    </label>
+
+                </div>
+
+
+
+                <div class="settings-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                NOTIFICATIONS
+                            </span>
+
+                            <h3>
+                                Notifications
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Enable alerts
+                            </strong>
+
+                            <small>
+                                Allow dashboard alert notifications.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-enable-alerts"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Critical alert notifications
+                            </strong>
+
+                            <small>
+                                Show urgent campus issues.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-critical-alerts"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Warning alert notifications
+                            </strong>
+
+                            <small>
+                                Show attention-level campus issues.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-warning-alerts"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+                </div>
+
+
+
+                <div class="settings-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                SENSOR NETWORK
+                            </span>
+
+                            <h3>
+                                Sensor Monitoring
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Sensor auto-refresh
+                            </strong>
+
+                            <small>
+                                Refresh sensor timestamps while live data is enabled.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-sensor-refresh"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Sensor health monitoring
+                            </strong>
+
+                            <small>
+                                Show sensor health updates in the dashboard.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-sensor-health"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Offline sensor alerts
+                            </strong>
+
+                            <small>
+                                Include offline devices in alert monitoring.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-offline-alerts"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+                </div>
+
+
+
+                <div class="settings-card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                DISPLAY
+                            </span>
+
+                            <h3>
+                                Display
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="settings-control">
+
+                        <span>
+
+                            <strong>
+                                Dashboard density
+                            </strong>
+
+                            <small>
+                                Choose a compact or comfortable layout.
+                            </small>
+
+                        </span>
+
+
+                        <select id="settings-density">
+
+                            <option value="comfortable">
+                                Comfortable
+                            </option>
+
+                            <option value="compact">
+                                Compact
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Show system status
+                            </strong>
+
+                            <small>
+                                Keep the sidebar system status visible.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-system-status"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+
+
+                    <label class="settings-control settings-toggle-row">
+
+                        <span>
+
+                            <strong>
+                                Show timestamps
+                            </strong>
+
+                            <small>
+                                Display update times on monitoring views.
+                            </small>
+
+                        </span>
+
+                        <input
+                            id="settings-timestamps"
+                            type="checkbox"
+                        >
+
+                        <span class="settings-toggle"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="settings-system-card">
+
+                <div>
+
+                    <span class="eyebrow">
+                        SYSTEM
+                    </span>
+
+                    <h3>
+                        System Status
+                    </h3>
+
+                    <p>
+
+                        <span class="status-dot"></span>
+
+                        All systems live
+
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Last data synchronization
+                    </span>
+
+                    <strong id="settings-last-sync">
+                        Just now
+                    </strong>
+
+                </div>
+
+
+                <div class="settings-actions">
+
+                    <button
+                        class="secondary-btn"
+                        id="settings-reset"
+                        type="button"
+                    >
+                        Restore Defaults
+                    </button>
+
+
+                    <button
+                        class="primary-btn"
+                        id="settings-save"
+                        type="button"
+                    >
+                        Save Settings
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <p
+                class="settings-feedback"
+                id="settings-feedback"
+                role="status"
+                aria-live="polite"
+            >
+            </p>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
