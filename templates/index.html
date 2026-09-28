@@ -47,31 +47,31 @@
 
         <nav>
 
-            <a href="#" class="nav-item active">
+            <a href="#overview" class="nav-item active">
                 <p>Overview</p>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#buildings" class="nav-item">
                 <p>Buildings</p>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#energy" class="nav-item">
                 <p>Energy</p>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#occupancy" class="nav-item">
                 <p>Occupancy</p>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#sensors" class="nav-item">
                 <p>Sensors</p>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#alerts" class="nav-item">
                 <p>Alerts</p>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#settings" class="nav-item">
                 <p>Settings</p>
             </a>
 
@@ -132,13 +132,20 @@
 
                     <input
                         type="text"
+                        id="dashboard-search"
+                        role="combobox"
+                        aria-autocomplete="list"
+                        aria-controls="search-results"
+                        aria-expanded="false"
                         placeholder="Search buildings, sensors, zones..."
                     >
+
+                    <div class="search-results" id="search-results" role="listbox" hidden></div>
 
                 </div>
 
 
-                <button class="icon-button">
+                <button class="icon-button" id="notifications-button" type="button" aria-label="Open alerts">
 
                     🔔
 
@@ -147,9 +154,9 @@
                 </button>
 
 
-                <div class="profile">
+                <button class="profile" id="profile-button" type="button" aria-label="Open admin settings" title="Admin settings">
                     A
-                </div>
+                </button>
 
             </div>
 
@@ -192,7 +199,7 @@
 
                 <div class="hero-buttons">
 
-                    <button class="primary-btn">
+                    <button class="primary-btn" id="explore-digital-twin" type="button">
 
                         <span>▶</span>
 
@@ -201,7 +208,7 @@
                     </button>
 
 
-                    <button class="secondary-btn">
+                    <button class="secondary-btn" id="view-analytics" type="button">
 
                         View Analytics
 
@@ -230,7 +237,7 @@
 
         <section class="stats">
 
-            <div class="stat-card">
+            <div class="stat-card" data-dashboard-view="buildings" role="button" tabindex="0" aria-label="Open all campus buildings">
 
                 <div class="stat-icon building-icon">
                     ▦
@@ -251,7 +258,7 @@
             </div>
 
 
-            <div class="stat-card">
+            <div class="stat-card" data-dashboard-view="network" role="button" tabindex="0" aria-label="Open campus network status">
 
                 <div class="stat-icon sensor-icon">
                     ⌁
@@ -272,7 +279,7 @@
             </div>
 
 
-            <div class="stat-card">
+            <div class="stat-card" data-dashboard-view="alerts" role="button" tabindex="0" aria-label="Open active campus issues">
 
                 <div class="stat-icon energy-icon">
                     ϟ
@@ -293,7 +300,7 @@
             </div>
 
 
-            <div class="stat-card">
+            <div class="stat-card" data-dashboard-view="coverage" role="button" tabindex="0" aria-label="Open campus coverage">
 
                 <div class="stat-icon people-icon">
                     ♟
@@ -370,7 +377,7 @@
 
                         <!-- BUILDING A -->
 
-                        <div class="building building-a">
+                        <div class="building building-a" role="button" tabindex="0" aria-label="Open Admin Block details">
 
                             <div class="building-label">
 
@@ -411,7 +418,7 @@
 
                         <!-- BUILDING B -->
 
-                        <div class="building building-b">
+                        <div class="building building-b" role="button" tabindex="0" aria-label="Open Engineering Block details">
 
                             <div class="building-label">
 
@@ -453,7 +460,7 @@
 
                         <!-- BUILDING C -->
 
-                        <div class="building building-c">
+                        <div class="building building-c" role="button" tabindex="0" aria-label="Open Library details">
 
                             <div class="building-label">
 
@@ -464,21 +471,18 @@
                             </div>
 
 
+
                             <div class="roof"></div>
 
 
                             <div class="building-front">
-
                                 <div class="windows">
-
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                     <i></i>
-
                                 </div>
-
 
                                 <div class="door"></div>
 
@@ -533,11 +537,11 @@
 
                     <div class="campus-controls">
 
-                        <button>+</button>
+                        <button type="button" aria-label="Zoom in" title="Zoom in">+</button>
 
-                        <button>−</button>
+                        <button type="button" aria-label="Zoom out" title="Zoom out">−</button>
 
-                        <button>⛶</button>
+                        <button type="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">⛶</button>
 
                     </div>
 
@@ -587,7 +591,7 @@
                         </div>
 
 
-                        <button class="more-btn">
+                        <button class="more-btn" type="button" aria-label="View occupancy analytics" title="View occupancy analytics">
                             •••
                         </button>
 
@@ -672,14 +676,14 @@
                         </div>
 
 
-                        <button class="see-all">
+                        <button class="see-all" id="see-all-alerts" type="button">
                             See all
                         </button>
 
                     </div>
 
 
-                    <div class="alert">
+                    <div class="alert" data-recent-alert role="button" tabindex="0">
 
                         <div class="alert-icon red">
                             ϟ
@@ -704,7 +708,7 @@
                     </div>
 
 
-                    <div class="alert">
+                    <div class="alert" data-recent-alert role="button" tabindex="0">
 
                         <div class="alert-icon yellow">
                             ☼
@@ -729,7 +733,7 @@
                     </div>
 
 
-                    <div class="alert">
+                    <div class="alert" data-recent-alert role="button" tabindex="0">
 
                         <div class="alert-icon blue">
                             ▪
@@ -1559,25 +1563,70 @@
                 </div>
 
 
+                <div class="block-overview" id="block-overview" aria-live="polite"></div>
+
+                <div class="block-issue-list" id="block-issue-list" hidden></div>
+
+                <section class="facility-section" id="block-labs-section" aria-labelledby="block-labs-title">
+                    <div class="facility-section-heading">
+                        <div>
+                            <span class="eyebrow">SPECIALIST SPACES</span>
+                            <h3 id="block-labs-title">Labs</h3>
+                        </div>
+                        <div class="facility-filters" id="lab-filters" role="group" aria-label="Filter labs">
+                            <button class="facility-filter active" type="button" data-lab-filter="all">All Labs</button>
+                            <button class="facility-filter" type="button" data-lab-filter="available">Available</button>
+                            <button class="facility-filter" type="button" data-lab-filter="in-use">In Use</button>
+                            <button class="facility-filter" type="button" data-lab-filter="equipment-issue">Equipment Issue</button>
+                            <button class="facility-filter" type="button" data-lab-filter="maintenance">Maintenance</button>
+                        </div>
+                    </div>
+                    <div class="facility-grid" id="lab-grid"></div>
+                    <p class="facility-source-note" id="lab-data-note">Lab inventory and equipment states are deterministic demo profiles until a lab inventory source is connected.</p>
+                </section>
+
+                <section class="facility-section" id="block-library-section" aria-labelledby="block-library-title" hidden>
+                    <div class="facility-section-heading">
+                        <div>
+                            <span class="eyebrow">STUDY SPACE</span>
+                            <h3 id="block-library-title">Library</h3>
+                        </div>
+                        <div class="facility-filters" id="library-filters" role="group" aria-label="Filter library">
+                            <button class="facility-filter active" type="button" data-library-filter="all">All</button>
+                            <button class="facility-filter" type="button" data-library-filter="open">Open</button>
+                            <button class="facility-filter" type="button" data-library-filter="closed">Closed</button>
+                            <button class="facility-filter" type="button" data-library-filter="near-capacity">Near Capacity</button>
+                        </div>
+                    </div>
+                    <div class="facility-grid" id="library-grid"></div>
+                    <p class="facility-source-note">Library hours and capacity are a fixed demo profile because library inventory is not stored in the database.</p>
+                </section>
+
+                <section class="facility-detail" id="facility-details" aria-live="polite" hidden></section>
+
 
                 <!-- ROOM SECTION -->
 
                 <div class="room-section">
 
                     <div class="room-section-title">
-
-                        <span>
-                            ROOMS
-                        </span>
-
-                        <small>
-                            Click a room to view timetable
-                        </small>
-
+                        <div>
+                            <span class="eyebrow">TEACHING SPACES</span>
+                            <h3>Rooms</h3>
+                        </div>
+                        <small>Room details and today's schedule</small>
                     </div>
 
+                    <div class="facility-filters" id="room-filters" role="group" aria-label="Filter rooms">
+                        <button class="facility-filter active" type="button" data-room-filter="all">All</button>
+                        <button class="facility-filter" type="button" data-room-filter="available">Available</button>
+                        <button class="facility-filter" type="button" data-room-filter="occupied">Occupied</button>
+                        <button class="facility-filter" type="button" data-room-filter="maintenance">Maintenance</button>
+                        <button class="facility-filter" type="button" data-room-filter="offline">Offline</button>
+                        <button class="facility-filter" type="button" data-room-filter="alerts">Alerts</button>
+                    </div>
 
-                    <!-- JS YAHAN ROOMS ADD KAREGA -->
+                    <p class="facility-source-note" id="room-data-note">Room environment and lighting values are fixed demo readings unless a matching database sensor is available.</p>
 
                     <div
                         class="room-grid"
@@ -3281,7 +3330,38 @@
                         Resolved
                     </button>
 
+                    <button
+                        class="alert-filter"
+                        type="button"
+                        data-alert-filter="active"
+                    >
+                        Active
+                    </button>
+
+                    <button
+                        class="alert-filter"
+                        type="button"
+                        data-alert-filter="dismissed"
+                    >
+                        Dismissed
+                    </button>
+
                 </div>
+
+
+                <label class="alerts-building-select">
+                    <span class="visually-hidden">Filter alerts by building</span>
+                    <select id="alerts-building-filter">
+                        <option value="all">All buildings</option>
+                        <option value="block 1">Block 1</option>
+                        <option value="block 2">Block 2</option>
+                        <option value="block 3">Block 3</option>
+                        <option value="block 4">Block 4</option>
+                        <option value="block 5">Block 5</option>
+                        <option value="block 6">Block 6</option>
+                        <option value="block 7">Block 7</option>
+                    </select>
+                </label>
 
 
                 <span id="alerts-last-updated">
@@ -4036,6 +4116,94 @@
             </p>
 
         </section>
+
+        <section class="page-section data-view-section" id="network-section" aria-labelledby="network-title">
+            <div class="page-section-header">
+                <div>
+                    <span class="eyebrow">CAMPUS CONNECTIVITY</span>
+                    <h2 id="network-title">Network Status</h2>
+                    <p>Network health by campus building and zone.</p>
+                </div>
+                <span class="alerts-demo-label">Illustrative signal profile</span>
+            </div>
+            <div class="network-overview">
+                <div><span>Overall Campus Network Health</span><strong id="network-overall-health">88%</strong></div>
+                <span id="network-summary-status" class="network-health-badge healthy">Healthy</span>
+            </div>
+            <div class="network-zone-grid" id="network-zone-grid" aria-live="polite"></div>
+            <div class="network-legend" aria-label="Network health legend">
+                <span><i class="healthy"></i> Healthy · 85–100%</span>
+                <span><i class="moderate"></i> Moderate · 65–84%</span>
+                <span><i class="critical"></i> Poor · below 65%</span>
+            </div>
+            <p class="data-note">Building-level signal scores are a deterministic demo profile; this installation has no wireless telemetry table.</p>
+        </section>
+
+        <section class="page-section data-view-section" id="coverage-section" aria-labelledby="coverage-title">
+            <div class="page-section-header">
+                <div>
+                    <span class="eyebrow">CAMPUS MAPPING</span>
+                    <h2 id="coverage-title">Campus Coverage</h2>
+                    <p>Digitally mapped footprint across the campus.</p>
+                </div>
+            </div>
+            <div class="coverage-overview">
+                <div class="coverage-ring" id="coverage-ring" role="img" aria-label="Campus coverage 94 percent">
+                    <strong id="coverage-overall">94%</strong><span>mapped</span>
+                </div>
+                <div>
+                    <span class="eyebrow">CAMPUS-WIDE COVERAGE</span>
+                    <h3>Digital twin coverage</h3>
+                    <p>Mapped buildings, sensor zones, and operational spaces.</p>
+                </div>
+            </div>
+            <div class="coverage-building-grid" id="coverage-building-grid" aria-live="polite"></div>
+            <p class="data-note">Per-building percentages use a fixed demo coverage profile because building-level mapping records are not stored in the database.</p>
+        </section>
+
+        <section class="page-section data-view-section" id="analytics-section" aria-labelledby="analytics-title">
+            <div class="page-section-header">
+                <div>
+                    <span class="eyebrow">CAMPUS PERFORMANCE</span>
+                    <h2 id="analytics-title">Campus Analytics</h2>
+                    <p>Energy, occupancy, network, issues, and mapped coverage.</p>
+                </div>
+            </div>
+            <div class="energy-top-grid analytics-metrics">
+                <div class="energy-stat-card"><span>Energy usage</span><strong id="analytics-energy">324 kWh</strong><small>Campus total</small></div>
+                <div class="energy-stat-card"><span>People on campus</span><strong id="analytics-occupancy">2,846</strong><small>Live occupancy</small></div>
+                <div class="energy-stat-card"><span>Network health</span><strong id="analytics-network">88%</strong><small>Illustrative profile</small></div>
+                <div class="energy-stat-card"><span>Active issues</span><strong id="analytics-issues">3</strong><small>Open alerts</small></div>
+                <div class="energy-stat-card"><span>Buildings online</span><strong id="analytics-buildings">7 / 7</strong><small>Campus blocks</small></div>
+                <div class="energy-stat-card"><span>Campus coverage</span><strong id="analytics-coverage">94%</strong><small>Digitally mapped</small></div>
+            </div>
+            <div class="analytics-chart-card">
+                <div class="section-header">
+                    <div><span class="eyebrow">ENERGY MONITORING</span><h3>Weekly Energy Usage</h3></div>
+                    <span class="analytics-chart-unit">kWh</span>
+                </div>
+                <div class="energy-chart" id="analytics-energy-chart" aria-label="Weekly energy usage chart"></div>
+            </div>
+            <p class="data-note" id="analytics-data-note" hidden>MySQL is unavailable; analytics are using fixed demo values.</p>
+        </section>
+
+        <dialog class="alert-detail-dialog" id="alert-detail-dialog" aria-labelledby="alert-detail-title">
+            <div class="alert-detail-header">
+                <div><span class="eyebrow">CAMPUS ALERT</span><h2 id="alert-detail-title">Alert details</h2></div>
+                <button class="close-building-view" id="alert-detail-back" type="button" aria-label="Back to alerts">×</button>
+            </div>
+            <div class="alert-detail-status">
+                <span id="alert-detail-severity" class="alert-status warning-status">Warning</span>
+                <span id="alert-detail-state">Active</span>
+            </div>
+            <p id="alert-detail-description" class="alert-detail-description"></p>
+            <dl class="alert-detail-fields">
+                <div><dt>Affected area</dt><dd id="alert-detail-location">Campus</dd></div>
+                <div><dt>Source</dt><dd id="alert-detail-source">Monitoring system</dd></div>
+                <div><dt>Time</dt><dd id="alert-detail-time">Not provided</dd></div>
+            </dl>
+            <button class="secondary-btn" id="alert-detail-list" type="button">Back to Alerts</button>
+        </dialog>
 
     </main>
 

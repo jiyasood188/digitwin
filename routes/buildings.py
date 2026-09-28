@@ -79,27 +79,46 @@ def get_building_rooms(building_identifier):
     """Return rooms for a given building ID or building name."""
     try:
         if building_identifier.isdigit():
-            bld = db.execute_one("SELECT id, name FROM buildings WHERE id = %s;", (int(building_identifier),))
+            bld = db.execute_one("""
+                SELECT id, code, name, type, total_floors, occupancy, energy_kw,
+                       active_sensors, status, description
+                FROM buildings
+                WHERE id = %s;
+            """, (int(building_identifier),))
         else:
-            bld = db.execute_one("SELECT id, name FROM buildings WHERE name = %s;", (building_identifier,))
+            bld = db.execute_one("""
+                SELECT id, code, name, type, total_floors, occupancy, energy_kw,
+                       active_sensors, status, description
+                FROM buildings
+                WHERE name = %s;
+            """, (building_identifier,))
 
         if not bld:
             return jsonify({"success": False, "error": "Building not found"}), 404
 
         rooms = db.execute_query("""
             SELECT r.id, r.room_number, r.name, r.type, r.capacity, r.current_occupancy,
+                   f.floor_number, f.name AS floor_name,
                    r.has_projector, r.has_ac, r.has_smartboard,
                    COUNT(s.id) AS schedule_count
             FROM rooms r
+            LEFT JOIN floors f ON f.id = r.floor_id
             LEFT JOIN schedules s ON r.id = s.room_id
             WHERE r.building_id = %s
-            GROUP BY r.id, r.room_number, r.name, r.type, r.capacity, r.current_occupancy, r.has_projector, r.has_ac, r.has_smartboard
+            GROUP BY r.id, r.room_number, r.name, r.type, r.capacity, r.current_occupancy,
+                     f.floor_number, f.name, r.has_projector, r.has_ac, r.has_smartboard
             ORDER BY r.room_number ASC;
         """, (bld["id"],))
+
+        room_types = [(room.get("type") or "").lower() for room in rooms]
+        bld["room_count"] = sum("lab" not in room_type and "library" not in room_type for room_type in room_types)
+        bld["lab_count"] = sum("lab" in room_type for room_type in room_types)
+        bld["library_count"] = sum("library" in room_type for room_type in room_types)
 
         return jsonify({
             "success": True,
             "building": bld["name"],
+            "building_details": bld,
             "rooms": rooms
         })
     except Exception as e:
