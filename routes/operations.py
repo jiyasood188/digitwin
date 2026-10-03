@@ -4,6 +4,7 @@ Campus Digital Twin
 """
 
 import random
+import uuid
 from datetime import datetime
 from flask import Blueprint, jsonify, request
 import db
@@ -58,63 +59,135 @@ def save_settings():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
-
 @operations_bp.route("/bookings", methods=["GET", "POST"])
 def manage_bookings():
-    """List or create campus room bookings."""
+
+    # CREATE BOOKING
     if request.method == "POST":
-        try:
-            data = request.get_json() or {}
-            room_id = data.get("room_id", 1)
-            title = data.get("title", "Meeting")
-            booked_by_name = data.get("booked_by_name", "Staff")
-            booked_by_email = data.get("booked_by_email", "staff@campus.edu")
-            booking_date = data.get("booking_date", datetime.today().strftime('%Y-%m-%d'))
-            start_time = data.get("start_time", "14:00:00")
-            end_time = data.get("end_time", "15:00:00")
-            qr_token = f"TOKEN-{random.randint(10000, 99999)}"
+        data = request.get_json() or {}
 
-            res = db.execute_commit("""
-                INSERT INTO bookings (room_id, title, booked_by_name, booked_by_email, booking_date, start_time, end_time, qr_token, status)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 'CONFIRMED');
-            """, (room_id, title, booked_by_name, booked_by_email, booking_date, start_time, end_time, qr_token))
+        user_id = data.get("user_id")
+        room_id = data.get("room_id")
+        booking_date = data.get("booking_date")
+        start_time = data.get("start_time")
+        end_time = data.get("end_time")
+        status = data.get("status", "confirmed")
 
-            return jsonify({"success": True, "booking_id": res["last_id"], "qr_token": qr_token}), 201
-        except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+        if not all([
+            user_id,
+            room_id,
+            booking_date,
+            start_time,
+            end_time
+        ]):
+            return jsonify({
+                "error": "user_id, room_id, booking_date, start_time and end_time are required"
+            }), 400
 
-    # GET
-    try:
-        bookings = db.execute_query("""
-            SELECT b.id, b.title, b.booked_by_name, b.booking_date, b.start_time, b.end_time, b.status, r.name AS room_name
-            FROM bookings b
-            JOIN rooms r ON b.room_id = r.id
-            ORDER BY b.booking_date DESC, b.start_time ASC;
-        """)
-        for b in bookings:
-            for field in ["booking_date", "start_time", "end_time"]:
-                if b.get(field) is not None:
-                    b[field] = str(b[field])
-        return jsonify({"success": True, "bookings": bookings})
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+        # Check user
+        user = db.execute_one(
+            "SELECT id FROM users WHERE id = %s",
+            (user_id,)
+        )
 
+        if not user:
+            return jsonify({"error": "User not found"}), 404
 
+        # Check room
+        room = db.execute_one(
+            "SELECT id FROM rooms WHERE id = %s",
+            (room_id,)
+        )
+
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Unique QR token
+        qr_token = uuid.uuid4().hex
+
+        result = db.execute_commit(
+            """
+            INSERT INTO bookings
+            (user_id, room_id, booking_date, start_time, end_time, status, qr_token)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """,
+            (
+                user_id,
+                room_id,
+                booking_date,
+                start_time,
+                end_time,
+                status,
+                qr_token
+            )
+        )
+
+        return jsonify({
+            "status": "success",
+            "message": "Booking created",
+            "booking_id": result["last_id"],
+            "qr_token": qr_token
+        }), 201
+
+    # GET BOOKINGS
+    query = """
+        SELECT
+            b.id,
+            b.user_id,
+            u.name AS user_name,
+            b.room_id,
+            r.room_number,
+            b.booking_date,
+            b.start_time,
+            b.end_time,
+            b.status,
+            b.qr_token
+        FROM bookings b
+        JOIN users u ON b.user_id = u.id
+        JOIN rooms r ON b.room_id = r.id
+        ORDER BY b.booking_date DESC, b.start_time DESC
+    """
+
+    bookings = db.execute_query(query)
+
+    return jsonify({
+        "status": "success",
+        "bookings": bookings
+    })
 @operations_bp.route("/parking", methods=["GET"])
 def get_parking():
-    """Return parking zones and live availability."""
-    try:
-        zones = db.execute_query("""
-            SELECT z.id, z.name, z.code, z.total_slots,
-                   SUM(CASE WHEN s.is_occupied = 1 THEN 1 ELSE 0 END) AS occupied_slots,
-                   (z.total_slots - SUM(CASE WHEN s.is_occupied = 1 THEN 1 ELSE 0 END)) AS available_slots
-            FROM parking_zones z
-            LEFT JOIN parking_slots s ON z.id = s.zone_id
-            GROUP BY z.id, z.name, z.code, z.total_slots;
-        """)
-        return jsonify({
-            "success": True,
-            "zones": zones
-        })
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+
+    query = """
+        SELECT
+            pa.id AS area_id,
+            pa.area_name,
+            pa.location,
+            COUNT(ps.id) AS total_slots,
+            SUM(
+                CASE
+                    WHEN ps.status = 'occupied' THEN 1
+                    ELSE 0
+                END
+            ) AS occupied_slots,
+            SUM(
+                CASE
+                    WHEN ps.status = 'available' THEN 1
+                    ELSE 0
+                END
+            ) AS available_slots
+        FROM parking_areas pa
+        LEFT JOIN parking_slots ps
+            ON pa.id = ps.area_id
+        GROUP BY
+            pa.id,
+            pa.area_name,
+            pa.location
+        ORDER BY pa.area_name
+    """
+
+    parking = db.execute_query(query)
+
+    return jsonify({
+        "status": "success",
+        "parking": parking
+    })

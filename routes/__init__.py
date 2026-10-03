@@ -9,6 +9,7 @@ from routes.buildings import buildings_bp
 from routes.telemetry import telemetry_bp
 from routes.alerts import alerts_bp
 from routes.operations import operations_bp
+from routes.management import management_bp
 
 
 def register_routes(app):
@@ -22,3 +23,4 @@ def register_routes(app):
     app.register_blueprint(telemetry_bp, url_prefix="/api")
     app.register_blueprint(alerts_bp, url_prefix="/api")
     app.register_blueprint(operations_bp, url_prefix="/api")
+    app.register_blueprint(management_bp, url_prefix="/api")
